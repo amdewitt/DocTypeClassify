@@ -1,8 +1,11 @@
 
 # imports
 
+import pandas
+
 class SiameseDataset(object):
-    pass
+    def __init__(self)
+        pass
 
 
 

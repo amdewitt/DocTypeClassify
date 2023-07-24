@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\adamm\\Source\\Repos\\DocTypeClassify",
+  "SelectedNode": "\\src\\siamTrain.py",
   "PreviewInSolutionExplorer": false
 }
