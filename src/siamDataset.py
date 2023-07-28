@@ -5,3 +5,4 @@
 #  Constructor
 #  Get Item
 #  Return Length
+# Get Label of Two Image Classes (True or False)
