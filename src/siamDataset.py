@@ -3,5 +3,5 @@
 
 # Class Dataset
 #  Constructor
-#  Get Item (self, index, train/validation/test)
+#  Get Item
 #  Return Length
