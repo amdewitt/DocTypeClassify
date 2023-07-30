@@ -20,7 +20,7 @@ import torchvison.transforms as transforms
 from torch.utils.data.dataset import Dataset
 
 class SiameseDataset():
-    def __init__(self, csvFile=None, directory=None, transform=None)
+    def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
         self.df.columns = ["image1" , "image2" , "label"]
         self.dir = directory

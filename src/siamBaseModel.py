@@ -18,10 +18,10 @@ from torch.optim.lr_scheduler import  StepLR
 
 class SiameseModel(nn.Module):
     # Constructor
-    def __init__(self)
-        super(SiameseModel, self).__init__()
+    def __init__(self):
+        """super(SiameseModel, self).__init__()
         
         # use resnet for
         self.resnet = torchvision.models.resnet18(pretrained=False)
 
-        self.
+        self."""
