@@ -54,8 +54,6 @@ class SiameseDataset():
         if class0.__eq__(class1):
             isSameClass = 1
 
-
-
         return image0, image1, class0, class1, isSameClass
 
 
