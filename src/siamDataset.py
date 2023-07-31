@@ -19,10 +19,10 @@ import torch
 
 
 class SiameseDataset():
-    # CSV File Format: Image 1, Class of Image 1, Image 2, Class of Image 2
+    # CSV File Format: Image 1, Image 2, Class of Image 1, Class of Image 2
     def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
-        self.df.columns = ["image0" , "class0", "image1" , "class1"]
+        self.df.columns = ["image0" , "image1" , "class0" , "class1"]
         self.dir = directory
         self.transform = transform
 
