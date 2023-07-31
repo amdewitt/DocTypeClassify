@@ -15,18 +15,18 @@ import pandas as pd
 import numpy as np
 import os
 
-import torch
+#import torch
 
 
 class SiameseDataset():
-    # CSV File Format: Image 1, Image 2, Class of Image 1, Class of Image 2
+    # CSV File Format: Image 1, Image 2, Class # of Image 1, Class # of Image 2
     def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
         self.df.columns = ["image0" , "image1" , "class0" , "class1"]
         self.dir = directory
         self.transform = transform
 
-    # Returns results in following order: Image 1, Image 2, Class of Image 1, Class of Image 2, Equality of the Classes
+    # Returns results in following order: Image 1, Image 2, Class # of Image 1, Class # of Image 2, Equality of the Classes
     def __getItem__(self, index):
         # Get image paths
         image0_path = os.path.join(self.dir, self.df.iat[index, 0])
@@ -51,12 +51,10 @@ class SiameseDataset():
 
         # Prepare Labels for Images
         isSameClass = 0
-        if class0.__eq__(class1):
+        if int(class0) == int(class1):
             isSameClass = 1
 
         return image0, image1, class0, class1, isSameClass
 
-
     def __len__(self):
         return len(self.df)
-    
