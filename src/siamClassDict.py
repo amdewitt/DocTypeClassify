@@ -13,7 +13,7 @@ class SiameseClassDictionary():
     def __getClassFromIndex__(index):
         i = int(index)
         if(i < 0 or i >= len(classes)):
-            return 0
+            return classes[0]
         else:
             return classes[i]
 
