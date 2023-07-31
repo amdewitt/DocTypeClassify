@@ -10,26 +10,27 @@
 # Imports
 
 from PIL import Image
+import numpy as np
 import pandas as pd
 import numpy as np
 import os
 
 import torch
-import torch.nn as nn
-import torchvison.transforms as transforms
-from torch.utils.data.dataset import Dataset
+
 
 class SiameseDataset():
+    # CSV File Format: Image 1, Class of Image 1, Image 2, Class of Image 2
     def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
-        self.df.columns = ["image1" , "image2" , "label"]
+        self.df.columns = ["image0" , "class0", "image1" , "class1"]
         self.dir = directory
         self.transform = transform
 
+    # Returns results in following order: Image 1, Image 2, Class of Image 1, Class of Image 2, Equality of the Classes
     def __getItem__(self, index):
         # Get image paths
         image0_path = os.path.join(self.dir, self.df.iat[index, 0])
-        image1_path = os.path.join(self.dir, self.df.iat[index, 1])
+        image1_path = os.path.join(self.dir, self.df.iat[index, 2])
 
         # Load images
         image0 = Image.open(image0_path)
@@ -38,10 +39,24 @@ class SiameseDataset():
         image0 = image0.convert("L")
         image1 = image1.convert("L")
 
+        # Transform Images
         if self.transform is not None:
             image0 = self.transform(image0)
             image1 = self.transform(image1)
-        return image0, image1, torch.from_numpy(torch.from_numpy(np.array([int(self.df.iat[index,2])],dtype=np.float32)))
+
+        # Get and Compare Image Classes
+
+        class0 = self.df.iat[index,1]
+        class1 = self.df.iat[index,3]
+
+        # Prepare Labels for Images
+        isSameClass = 0
+        if class0.__eq__(class1):
+            isSameClass = 1
+
+
+
+        return image0, image1, class0, class1, isSameClass
 
 
     def __len__(self):
