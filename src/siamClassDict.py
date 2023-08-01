@@ -26,4 +26,3 @@ class SiameseClassDictionary():
 
     def len():
         return len(classes)
-        

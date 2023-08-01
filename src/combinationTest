@@ -1,0 +1,15 @@
+def __main__():
+    iterateCombinations()
+
+
+
+def iterateCombinations():
+    i = 0
+    while i < 10:
+        j = i + 1
+        while j < 10:
+            print("("+ str(i) + ", " + str(j) + ") ")
+        print ("\n")
+        
+if __name__ == "__main__":
+    __main__()
