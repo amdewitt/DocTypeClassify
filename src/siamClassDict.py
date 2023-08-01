@@ -11,7 +11,7 @@ classes = {
 }
 
 # (Helper Method) Generates the dictionary in reverse, to map values to the appropriate class
-def __generateLookup()
+def __generateLookup():
     mappings = {}
     nameList = []
 
