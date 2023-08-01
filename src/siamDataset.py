@@ -15,6 +15,8 @@ import pandas as pd
 import numpy as np
 import os
 
+from siamClassDict import SiameseClassDictionary
+
 #import torch
 
 
@@ -40,11 +42,18 @@ class SiameseDataset():
         if self.transform is not None:
             image0 = self.transform(image0)
 
-        # Get and Compare Image Classes
-
-        class0 = self.df.iat[index,1]
+        # Get and Compare Image Clsses
+        class0 = SiameseClassDictionary.__findClassFromValue__(self.df.iat[index,1])
 
         return image0, class0
+    
+    def __getItemPair__(self, index0, index1):
+        image0, class0 = self.__getSingleItem__(index0)
+        image1, class1 = self.__getSingleItem__(index1)
+        sameClass = 0
+        if class0 == class1:
+            sameClass = 1
+        return image0, image1, sameClass
 
     def __len__(self):
         return len(self.df)

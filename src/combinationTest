@@ -6,10 +6,15 @@ def __main__():
 def iterateCombinations():
     i = 0
     while i < 10:
+        #j = i + 1
+        #
         j = i + 1
+        matrixString = ""
         while j < 10:
-            print("("+ str(i) + ", " + str(j) + ") ")
-        print ("\n")
+            matrixString += "("+ str(i) + ", " + str(j) + ") "
+            j += 1
+        i += 1
+        print (matrixString + "\n")
         
 if __name__ == "__main__":
     __main__()
