@@ -9,13 +9,15 @@
 
 # Imports
 
+import random
+
 from PIL import Image
 import numpy as np
 import pandas as pd
 import numpy as np
 import os
 
-from siamClassDict import SiameseClassDictionary
+import siamClassDict
 
 #import torch
 
@@ -24,7 +26,7 @@ class SiameseDataset():
     # CSV File Format: CSV File Format: Image, Class of Image
     def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
-        self.df.columns = ["image0" , "image1" , "class0" , "class1"]
+        self.df.columns = ["image", "class"]
         self.dir = directory
         self.transform = transform
 
@@ -43,7 +45,7 @@ class SiameseDataset():
             image0 = self.transform(image0)
 
         # Get and Compare Image Clsses
-        class0 = SiameseClassDictionary.__findClassFromValue__(self.df.iat[index,1])
+        class0 = str(siamClassDict.__findClass__(self.df.iat[index,1]))
 
         return image0, class0
     
@@ -54,6 +56,25 @@ class SiameseDataset():
         if class0 == class1:
             sameClass = 1
         return image0, image1, sameClass
+    
+    def __getRandomItemFromClass__(self, targetClass):
+        imgList = []
+        nImagesInClass = 0
+        for i in self.df:
+            classQuery = siamClassDict.__findClass__(targetClass)
+            imgClass = siamClassDict.__findClass__(self.df.iat[i,1])
+            if classQuery == imgClass:
+                classImg = [self.df.iat[i,0]]
+                imgList.extend[classImg]
+                nImagesInClass += 1
+            else:
+                continue
+        
+        r = random.randint(0, (nImagesInClass - 1))
+        randImg = imgList[r]
+        return randImg
+        
+        #return randImg, imgClass
 
     def __len__(self):
         return len(self.df)

@@ -1,5 +1,9 @@
+import siamClassDict
+
 def __main__():
     iterateCombinations()
+
+    siamClassDict.__printLookup__()
 
 
 
