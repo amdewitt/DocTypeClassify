@@ -55,11 +55,11 @@ class SiameseDataset():
         sameClass = 0
         if class0 == class1:
             sameClass = 1
-        return image0, image1, sameClass
+        return image0, image1, sameClass, class0, class1
     
     def __getRandomItemFromClass__(self, targetClass):
         imgList = []
-        nImagesInClass = 0
+        nImagesInClass = 0 # number of images in the target class
         for i in self.df:
             classQuery = siamClassDict.__findClass__(targetClass)
             imgPath, imgClass = self.__getSingleItem__(i)
@@ -70,6 +70,7 @@ class SiameseDataset():
             else:
                 continue
         
+        # Gets random index and returns image at that index
         r = random.randint(0, (nImagesInClass - 1))
         randImg = imgList[r]
         return randImg
