@@ -62,9 +62,9 @@ class SiameseDataset():
         nImagesInClass = 0
         for i in self.df:
             classQuery = siamClassDict.__findClass__(targetClass)
-            imgClass = siamClassDict.__findClass__(self.df.iat[i,1])
+            imgPath, imgClass = self.__getSingleItem__(i)
             if classQuery == imgClass:
-                classImg = [self.df.iat[i,0]]
+                classImg = [imgPath]
                 imgList.extend[classImg]
                 nImagesInClass += 1
             else:
