@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import os
+import torch as th
 
 import siamClassDict
 
@@ -23,41 +24,30 @@ import siamClassDict
 
 
 class SiameseDataset():
-    # CSV File Format: CSV File Format: Image, Class of Image
+    # CSV File Format: CSV File Format: Image1, Image2, IsSameClass
     def __init__(self, csvFile=None, directory=None, transform=None):
         self.df = pd.read_csv(csvFile)
-        self.df.columns = ["image", "class"]
+        self.df.columns = ["image1", "image2", "sameclass"]
         self.dir = directory
         self.transform = transform
 
     # Returns results in following order: Image, Class # of Image
-    def __getSingleItem__(self, index):
-        # Get image paths
-        image0_path = os.path.join(self.dir, self.df.iat[index, 0])
-
-        # Load images
-        image0 = Image.open(image0_path)
-
-        image0 = image0.convert("L")
-
-        # Transform Images
+    def __getitem__(self, index):
+        # getting the image path
+        image0_path=os.path.join(self.train_dir,self.train_df.iat[index,0])
+        image1_path=os.path.join(self.train_dir,self.train_df.iat[index,1])
+        # Loading the image
+        img0 = Image.open(image1_path)
+        img1 = Image.open(image2_path)
+        img0 = img0.convert("L")
+        img1 = img1.convert("L")
+        # Apply image transformations
         if self.transform is not None:
-            image0 = self.transform(image0)
-
-        # Get and Compare Image Clsses
-        class0 = str(siamClassDict.__findClass__(self.df.iat[index,1]))
-
-        return image0, class0
+            img0 = self.transform(img0)
+            img1 = self.transform(img1)
+        return img0, img1 , th.from_numpy(np.array([int(self.train_df.iat[index,2])],dtype=np.float32))
     
-    def __getItemPair__(self, index0, index1):
-        image0, class0 = self.__getSingleItem__(index0)
-        image1, class1 = self.__getSingleItem__(index1)
-        sameClass = 0
-        if class0 == class1:
-            sameClass = 1
-        return image0, image1, sameClass, class0, class1
-    
-    def __getRandomItemFromClass__(self, targetClass):
+    """def __getRandomItemFromClass__(self, targetClass):
         imgList = []
         nImagesInClass = 0 # number of images in the target class
         for i in self.df:
@@ -73,7 +63,7 @@ class SiameseDataset():
         # Gets random index and returns image at that index
         r = random.randint(0, (nImagesInClass - 1))
         randImg = imgList[r]
-        return randImg
+        return randImg"""
         
         #return randImg, imgClass
 
