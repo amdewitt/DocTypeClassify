@@ -17,40 +17,56 @@ import pandas as pd
 import numpy as np
 import os
 import torch
-
+import math
 
 class SiameseDataset():
-    # CSV File Format: CSV File Format: Image1, Image2, Label
+    # CSV File Format: CSV File Format: Image, Class
     def __init__(self, csvFile=None, directory=None, transform=None):
+        # Prepare csv file for reading
         self.df = pd.read_csv(csvFile)
-        self.df.columns = ["image1", "image2", "isSimilar"]
+        self.df.columns = ["image1", "imageClass"]
+        # Set other necessary variables
         self.dir = directory
         self.transform = transform
 
-    # Returns results in following order: Image, Class # of Image
-    def __getitem__(self, index):
-        # Get image paths
-        image0_path = os.path.join(self.dir, self.df.iat[index, 0])
-        image1_path = os.path.join(self.dir, self.df.iat[index, 1])
-
-        image0 = self.__pathToImage(image0_path)
-        image1 = self.__pathToImage(image1_path)
-        
-        return (
-            image0,
-            image1,
-            torch.from_numpy(
-                np.array([int(self.train_df.iat[index, 2])], dtype=np.float32)
-            )
-        )
-
     # Path
-    def __pathToImage(self, path):
-        img = Image.open(path)
+    def __pathToImage(self, rel_path):
+        # open image
+        img_path = os.path.join(self.dir, rel_path)
+        img = Image.open(img_path)
+        # convert images to common format
         img = img.convert("L")
+        # transform image
         if self.transform is not None:
             img = self.transform(img)
         return img
-
-    def __len__(self):
+    
+    # Gets the length of the csv file
+    def __dfLen__(self):
         return len(self.df)
+    
+    # Gets the total number of distinct pairs that can be fetched from the csv file
+    def __len__(self):
+        triMatrixLength = 0
+        length = self.__dfLen__()
+        i = 0
+        print(length - 1)
+        for i in range(0, (length - 1)):
+            triMatrixLength += length - 1 - i
+        return triMatrixLength
+
+    # Turns a 1d index into a pair of distinct coordinates to fetch a pair of images from the CSV file
+    def __indexToTriMatrixCoords__(self, index):
+        # default if index is not in range
+        if(index < 0 or index >= self.__len__()):
+            return 0, 0
+        # Optimized formulas for getting triangular matrix coordinates
+        # (sourced from https://stackoverflow.com/questions/40950460/how-to-convert-triangular-matrix-indexes-in-to-row-column-coordinates)
+        i = math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5)
+        j = int((index + 1) - (i - 1) * i / 2 - 1)
+        return i, j
+
+            #i += n entries in row
+            #index -= n entries in row
+
+    
