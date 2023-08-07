@@ -12,11 +12,11 @@
 import random
 
 from PIL import Image
-import numpy as np
+#import numpy as np
 import pandas as pd
 import numpy as np
 import os
-import torch
+#import torch
 import math
 
 class SiameseDataset():

@@ -2,7 +2,7 @@ import math
 
 # Test File for converting 1d index to triangular matrix to make the CSV file easier to make
 def __main__():
-    length = 1000
+    length = 7
     for i in range(0, __len__(length)):
         r, c = __indexToTriMatrixCoords__(i, length)
         print(str(i) + "(" + str(r) + ", " + str(c) + ")")
@@ -18,7 +18,7 @@ def __indexToTriMatrixCoords__(index, len):
     # Optimized formulas for getting triangular matrix coordinates (sourced from https://stackoverflow.com/questions/40950460/how-to-convert-triangular-matrix-indexes-in-to-row-column-coordinates)
     i = math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5)
     j = int((index + 1) - (i - 1) * i / 2 - 1)
-    return i, j
+    return i, j 
 
 if __name__ == "__main__":
     __main__()
