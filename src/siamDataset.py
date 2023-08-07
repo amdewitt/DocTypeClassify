@@ -62,7 +62,7 @@ class SiameseDataset():
     def __indexToTriMatrixCoords(self, index):
         # default if index is not in range
         if(index < 0 or index >= self.__len__()):
-            return 0, 0
+            return 1, 0
         # Optimized formulas for getting triangular matrix coordinates
         # (sourced from https://stackoverflow.com/questions/40950460/how-to-convert-triangular-matrix-indexes-in-to-row-column-coordinates)
         i = math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5)
