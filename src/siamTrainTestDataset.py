@@ -29,7 +29,24 @@ class SiameseDataset():
         self.dir = directory
         self.transform = transform
 
-    # Path
+    def __getitem__(self, index):
+        # Overflow code
+        if(index < 0 or index >= self.__len__()):
+            index = 0
+        # Get indices of image pair
+        index0, index1 = self.__indexToTriMatrixCoords(index)
+        # Get images
+        img0 = self.__pathToImage(self.df.iat[index0, 0])
+        img1 = self.__pathToImage(self.df.iat[index1, 0])
+        # Get Classes
+        class0 = self.df.iat[index0, 1]
+        class1 = self.df.iat[index1, 1]
+        sameClass = 0.0
+        if class0 == class1:
+            sameClass = 1.0
+        return img0, img1, sameClass
+
+    # (Helper) Convert Relative Image Path to Image
     def __pathToImage(self, rel_path):
         # open image
         img_path = os.path.join(self.dir, rel_path)
@@ -40,23 +57,9 @@ class SiameseDataset():
         if self.transform is not None:
             img = self.transform(img)
         return img
-    
-    # Gets the length of the csv file
-    def __dfLen__(self):
-        return len(self.df)
-    
-    # Gets the total number of distinct pairs that can be fetched from the csv file
-    def __len__(self):
-        triMatrixLength = 0
-        length = self.__dfLen__()
-        i = 0
-        print(length - 1)
-        for i in range(0, (length - 1)):
-            triMatrixLength += length - 1 - i
-        return triMatrixLength
 
-    # Turns a 1d index into a pair of distinct coordinates to fetch a pair of images from the CSV file
-    def __indexToTriMatrixCoords__(self, index):
+    # (Helper) Turns a 1d index into a pair of distinct coordinates to fetch a pair of images from the CSV file
+    def __indexToTriMatrixCoords(self, index):
         # default if index is not in range
         if(index < 0 or index >= self.__len__()):
             return 0, 0
@@ -65,8 +68,14 @@ class SiameseDataset():
         i = math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5)
         j = int((index + 1) - (i - 1) * i / 2 - 1)
         return i, j
-
-            #i += n entries in row
-            #index -= n entries in row
+    
+    # Gets the actual length of the csv file
+    def __dfLen__(self):
+        return len(self.df)
+    
+    # Gets the total number of distinct pairs that can be fetched from the csv file
+    def __len__(self):
+        n = self.__dfLen__()
+        return int(n * (n - 1) / 2)
 
     

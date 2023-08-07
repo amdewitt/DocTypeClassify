@@ -2,29 +2,13 @@ import math
 
 # Test File for converting 1d index to triangular matrix to make the CSV file easier to make
 def __main__():
-    length = 100
-    printLength = str(__lenP__(length))
-
+    length = 1000
     for i in range(0, __len__(length)):
         r, c = __indexToTriMatrixCoords__(i, length)
         print(str(i) + "(" + str(r) + ", " + str(c) + ")")
 
-def __lenP__(length):
-    pLength = 0
-    i = 0
-    print("1D length = " + str(length))
-    for i in range(0, (length - 1)):
-        pLength += length - 1 - i
-        print("+ " + str(length - 1 - i))
-    print("TriMatrix Length = " + str(pLength))
-    return pLength
-
 def __len__(length):
-    pLength = 0
-    i = 0
-    for i in range(0, (length - 1)):
-        pLength += length - 1 - i
-    return pLength
+    return int(length * (length - 1) / 2)
 
 # Turns a 1d index into a pair of distinct coordinates to fetch a pair of images from the CSV file
 def __indexToTriMatrixCoords__(index, len):
