@@ -1,4 +1,4 @@
-
+# Imports
 from siamDataset import SiameseDataset
 from siamBaseModel import SiameseModel
 from siamLoss import ContrastiveLoss
@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
-import matplotlib
+#import matplotlib
 
 siamese_dataset = SiameseDataset(
     config.training_csv,
@@ -57,4 +57,3 @@ def train():
         loss.append(contrastive_loss.item())
     #show_plot(counter, loss)
     return net
-
