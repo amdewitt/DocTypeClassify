@@ -32,6 +32,7 @@ loss = ContrastiveLoss()
 # Optimizer
 optimizer = torch.optim.Adam(net.parameters(), lr=1e-3, weight_decay=0.0005)
 
+# Driver Code
 def __main__():
     device = torch.device('cuda' if torch.cuda.is_available() else ' cpu')
     print("Model device: " + device + "\n------------------\n")
@@ -45,7 +46,9 @@ def train():
     counter = []
     iteration_number = 0
     for epoch in range(0, config.epochs):
+        # enumerate over each distinct pair in dataset
         for data in enumerate(train_dataloader, 0):
+            # Get image at index
             img0, img1, label = data
             img0, img1, label = img0.cuda(), img1.cuda()
             optimizer.zero_grad()
@@ -59,3 +62,7 @@ def train():
         loss.append(contrastive_loss.item())
     #show_plot(counter, loss)
     return net
+
+# Driver Code
+if __name__ == "__main__":
+    __main__()
