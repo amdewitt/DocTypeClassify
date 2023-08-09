@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 
 #import matplotlib
 
+# Dataset
 siamese_dataset = SiameseDataset(
     config.training_csv,
     config.training_dir,
@@ -19,10 +20,11 @@ siamese_dataset = SiameseDataset(
 )
 
 # Load the dataset as pytorch tensors using dataloader
-train_dataloader = DataLoader(siamese_dataset,
-                        shuffle=True,
-                        num_workers=8,
-                        batch_size=config.batch_size) 
+train_dataloader = DataLoader(
+    siamese_dataset,
+    shuffle=True,
+    num_workers=8,
+    batch_size=config.batch_size) 
 # Siamese Network
 net = SiameseModel.cuda()
 # Contrastive Loss function
