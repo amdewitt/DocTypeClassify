@@ -1,6 +1,8 @@
-training_csv = "/content/drive/My Drive/data/sign_data/train_data.csv"
-training_dir = "/content/drive/My Drive/data/sign_data/train"
-testing_csv = "/content/drive/My Drive/data/sign_data/test_data.csv"
-testing_dir = "/content/drive/My Drive/data/sign_data/test"
+training_csv = ""
+training_dir = ""
+testing_csv = ""
+testing_dir = ""
 batch_size = 32
 epochs = 20
+height = 400
+width = 400
