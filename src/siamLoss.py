@@ -10,9 +10,9 @@ class ContrastiveLoss(nn.Nodule):
         self.margin = margin
     
     def forward(self, x0, x1, isFromSameClass):
-        y = 0
+        y = 0.0
         if (isFromSameClass == 1 or isFromSameClass == True):
-            y = 1
+            y = 1.0
 
         diff = x0 - x1
         euclideanDist_sq = torch.pow(diff, 2)
