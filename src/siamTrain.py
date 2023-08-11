@@ -1,7 +1,7 @@
 # Run this to train the Neural Network on the dataset
 
 # Imports
-from siamDataset import SiameseDataset
+from siamDataset import PairwiseDataset
 from siamBaseModel import SiameseModel
 from siamLoss import ContrastiveLoss
 import config
@@ -9,13 +9,12 @@ import config
 import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
-
 import numpy
 
 #import matplotlib
 
 # Training Dataset
-train_dataset = SiameseDataset(
+train_dataset = PairwiseDataset(
     config.training_csv,
     config.training_dir,
     transform=transforms.Compose(
@@ -32,7 +31,7 @@ train_dataloader = DataLoader(
 )
 
 # Training Dataset
-eval_dataset = SiameseDataset(
+eval_dataset = PairwiseDataset(
     config.validation_csv,
     config.validation_dir,
     transform=transforms.Compose(
@@ -53,7 +52,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # Print de
 # Siamese Network
 net = SiameseModel.to(device)
 # Contrastive Loss function
-loss = ContrastiveLoss()
+loss = ContrastiveLoss(margin = config.margin)
 # Optimizer
 optimizer = torch.optim.Adam(net.parameters(), lr=1e-3, weight_decay=0.0005)
 

@@ -8,3 +8,4 @@ batch_size = 32
 epochs = 20
 height = 400
 width = 400
+lossMargin = 1.0

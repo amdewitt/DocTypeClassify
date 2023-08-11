@@ -19,7 +19,8 @@ import os
 #import torch
 import math
 
-class SiameseDataset():
+# Class used for Training and Testing
+class PairwiseDataset():
     # CSV File Format: CSV File Format: Image, Class
     def __init__(self, csvFile=None, directory=None, transform=None):
         # Prepare csv file for reading
@@ -74,5 +75,6 @@ class SiameseDataset():
     def __len__(self):
         n = self.__dfLen__()
         return int(n * (n - 1) / 2)
-
     
+class ClassificationDataset():
+    pass
