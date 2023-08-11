@@ -48,13 +48,14 @@ def __main__():
         train_loss = train()
         print(f"Training Loss {train_loss}\n")
         print("--------------------\n")
-    torch.save(net.state_dict(), "/trainedModels/model.pth")
+    torch.save(net.state_dict(), "/trainedModel/model.pth")
     print("Model Saved Successfully")
     
 
 def train():
     loss = []
-    counter = []
+    #counter=[]
+    #iteration_number = 0
     for data in enumerate(train_dataloader, 0):
         # Get image at index
         img0, img1, label = data
