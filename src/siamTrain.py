@@ -13,6 +13,8 @@ import numpy
 
 #import matplotlib
 
+# Variable Definitions
+
 # Training Dataset
 train_dataset = PairwiseDataset(
     config.training_csv,
@@ -52,10 +54,13 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # Print de
 # Siamese Network
 net = SiameseModel.to(device)
 # Contrastive Loss function
-loss = ContrastiveLoss(margin = config.margin)
+loss = ContrastiveLoss(margin = config.loss_margin)
 # Optimizer
 optimizer = torch.optim.Adam(net.parameters(), lr=1e-3, weight_decay=0.0005)
 
+# End Variable Definitions
+
+# Trains the model, returning average loss
 def train():
     loss = []
     #counter=[]
@@ -64,11 +69,15 @@ def train():
         # Get image at index
         img0, img1, class0, class1 = data
         img0, img1, = img0.to(device), img1.to(device)
+        # Get Label
         label = 0
         if class0 == class1:
             label = 1
+        # Initialize Optimizer
         optimizer.zero_grad()
+        # Pass images through model
         output0, output1 = net(img0, img1)
+        # Incur loss as needed, then backpropogate and optimize
         contrastive_loss = loss(output0, output1, label)
         contrastive_loss.backward()
         optimizer.step()
@@ -76,17 +85,22 @@ def train():
     loss = numpy.array(loss)
     return loss.mean()/len(train_dataloader)
 
+# Evaluates the model, returning average loss
 def eval():
     loss = []
     #counter=[]
     #iteration_number = 0
     for data in enumerate(eval_dataloader, 0):
+        # Get image at index
         img0, img1, class0, class1 = data
         img0, img1, = img0.to(device), img1.to(device)
+        # Get Label
         label = 0
         if class0 == class1:
             label = 1
+        # Pass images through model
         output0, output1 = net(img0, img1)
+        # Incur loss as needed
         contrastive_loss = loss(output0, output1, label)
         loss.append(contrastive_loss.item())
     loss = numpy.array(loss)
@@ -99,18 +113,20 @@ def __main__():
     print("-"*20 + "\n")
     for epoch in range(0, config.epochs): # Begin Training
         print("Epoch {}\n".format((epoch + 1)))
-        best_eval_loss = 10000
-        train_loss = train()
+        best_eval_loss = 10000 # Initialize Best Evaluation Loss (BEL)
+        train_loss = train() # Calculate Losses
         eval_loss = eval()
         print(f"Training Loss: {train_loss}\n") # Print Losses
         print(f"Validation Loss: {eval_loss}\n")
         print("-"*20 + "\n")
-        if(eval_loss < best_eval_loss):
+        if(eval_loss < best_eval_loss): # Save only if BEL is surpassed
             best_eval_loss = eval_loss
             print("Best Validation Loss: {}".format(best_eval_loss))
-            torch.save(net.state_dict(), "/savedModels/model.pth")
-            print("Model Saved Successfully")
+            torch.save(net.state_dict(), config.model_path)
+            print("Model Saved Successfully\n")
             print("-"*20 + "\n")
+    torch.save(net.state_dict(), config.model_path) # Save again (catch-all)
+    print("Model Saved Successfully\n")
 
 # Driver Code
 if __name__ == "__main__":

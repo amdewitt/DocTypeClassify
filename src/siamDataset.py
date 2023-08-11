@@ -75,6 +75,7 @@ class PairwiseDataset():
     def __len__(self):
         n = self.__dfLen__()
         return int(n * (n - 1) / 2)
-    
+
+# Class used for classification with an input
 class ClassificationDataset():
     pass
