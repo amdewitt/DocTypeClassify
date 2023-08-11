@@ -58,8 +58,11 @@ def train():
     #iteration_number = 0
     for data in enumerate(train_dataloader, 0):
         # Get image at index
-        img0, img1, label = data
-        img0, img1, label = img0.cuda(), img1.cuda()
+        img0, img1, class0, class1 = data
+        img0, img1, = img0.cuda(), img1.cuda()
+        label = 0
+        if class0 == class1:
+            label = 1
         optimizer.zero_grad()
         output0, output1 = net(img0, img1)
         contrastive_loss = loss(output0, output1, label)
