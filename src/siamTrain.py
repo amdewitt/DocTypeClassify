@@ -99,8 +99,8 @@ def __main__():
     print("Model device: " + device + "\n") # Print device
     print("-"*20 + "\n")
     for epoch in range(0, config.epochs): # Begin Training
+        print("Epoch {}\n".format((epoch + 1)))
         best_eval_loss = 10000
-        print("Epoch {}".format((epoch + 1)))
         train_loss = train()
         eval_loss = eval()
         print(f"Training Loss: {train_loss}\n") # Print Losses
