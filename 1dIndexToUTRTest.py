@@ -6,6 +6,7 @@ def __main__():
     for i in range(0, __len__(length)):
         r, c = __indexToTriMatrixCoords__(i, length)
         print(str(i) + "(" + str(r) + ", " + str(c) + ")")
+    print("-"*20 + "\n")
 
 def __len__(length):
     return int(length * (length - 1) / 2)

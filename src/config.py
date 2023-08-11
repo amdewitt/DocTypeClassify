@@ -1,5 +1,7 @@
 training_csv = ""
 training_dir = ""
+validation_csv = ""
+validation_dir = ""
 testing_csv = ""
 testing_dir = ""
 batch_size = 32

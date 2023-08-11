@@ -39,8 +39,8 @@ class SiameseDataset():
         img0 = self.__pathToImage(self.df.iat[index0, 0])
         img1 = self.__pathToImage(self.df.iat[index1, 0])
         # Get Classes
-        class0 = self.df.iat[index0, 1]
-        class1 = self.df.iat[index1, 1]
+        class0 = str(self.df.iat[index0, 1]).lower()
+        class1 = str(self.df.iat[index0, 1]).lower()
         return img0, img1, class0, class1
 
     # (Helper) Convert Relative Image Path to Image

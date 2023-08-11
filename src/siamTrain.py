@@ -31,26 +31,31 @@ train_dataloader = DataLoader(
     batch_size=config.batch_size
 )
 
+# Training Dataset
+eval_dataset = SiameseDataset(
+    config.validation_csv,
+    config.validation_dir,
+    transform=transforms.Compose(
+        [transforms.Resize((config.height, config.width)), transforms.ToTensor()]
+    ),
+)
+
+# Load the dataset as pytorch tensors using dataloader
+eval_dataloader = DataLoader(
+    eval_dataset,
+    shuffle=False,
+    num_workers=8,
+    batch_size=config.batch_size
+)
+
+# Device used for computations
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # Print device
 # Siamese Network
-net = SiameseModel.cuda()
+net = SiameseModel.to(device)
 # Contrastive Loss function
 loss = ContrastiveLoss()
 # Optimizer
 optimizer = torch.optim.Adam(net.parameters(), lr=1e-3, weight_decay=0.0005)
-
-# Driver Code
-# Trains the model, showing progress along the way
-def __main__():
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print("Model device: " + device + "\n--------------------\n")
-    for epoch in range(0, config.epochs):
-        print("Epoch {}".format((epoch + 1)))
-        train_loss = train()
-        print(f"Training Loss {train_loss}\n")
-        print("--------------------\n")
-    torch.save(net.state_dict(), "/trainedModel/model.pth")
-    print("Model Saved Successfully")
-    
 
 def train():
     loss = []
@@ -59,7 +64,7 @@ def train():
     for data in enumerate(train_dataloader, 0):
         # Get image at index
         img0, img1, class0, class1 = data
-        img0, img1, = img0.cuda(), img1.cuda()
+        img0, img1, = img0.to(device), img1.to(device)
         label = 0
         if class0 == class1:
             label = 1
@@ -71,6 +76,42 @@ def train():
         loss.append(contrastive_loss.item())
     loss = numpy.array(loss)
     return loss.mean()/len(train_dataloader)
+
+def eval():
+    loss = []
+    #counter=[]
+    #iteration_number = 0
+    for data in enumerate(eval_dataloader, 0):
+        img0, img1, class0, class1 = data
+        img0, img1, = img0.to(device), img1.to(device)
+        label = 0
+        if class0 == class1:
+            label = 1
+        output0, output1 = net(img0, img1)
+        contrastive_loss = loss(output0, output1, label)
+        loss.append(contrastive_loss.item())
+    loss = numpy.array(loss)
+    return loss.mean()/len(eval_dataloader)
+
+# Driver Code
+# Trains the model, showing progress along the way
+def __main__():
+    print("Model device: " + device + "\n") # Print device
+    print("-"*20 + "\n")
+    for epoch in range(0, config.epochs): # Begin Training
+        best_eval_loss = 10000
+        print("Epoch {}".format((epoch + 1)))
+        train_loss = train()
+        eval_loss = eval()
+        print(f"Training Loss: {train_loss}\n") # Print Losses
+        print(f"Validation Loss: {eval_loss}\n")
+        print("-"*20 + "\n")
+        if(eval_loss < best_eval_loss):
+            best_eval_loss = eval_loss
+            print("Best Validation Loss: {}".format(best_eval_loss))
+            torch.save(net.state_dict(), "/savedModels/model.pth")
+            print("Model Saved Successfully")
+            print("-"*20 + "\n")
 
 # Driver Code
 if __name__ == "__main__":
