@@ -1,4 +1,4 @@
-# Run this to train the Neural Network on the dataset
+# Driver file for training and validating the model
 
 # Imports
 from siamDataset import PairwiseDataset

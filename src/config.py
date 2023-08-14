@@ -8,16 +8,16 @@ import torchvision.transforms as transforms
 # Configuration Variables
 
 # Training
-training_csv = "" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-training_dir = "" # Root Directory
+training_csv = "/sets/train/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
+training_dir = "/sets/trainCSV.csv" # Root Directory (MUST END IN "/"!!!)
 
 # Validation
-validation_csv = "" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-validation_dir = "" # Root Directory
+validation_csv = "/sets/validation/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
+validation_dir = "/sets/validationCSV.csv" # Root Directory (MUST END IN "/"!!!)
 
 # Testing 
-testing_csv = "" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-testing_dir = "" # Root Directory
+testing_csv = "/sets/test/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
+testing_dir = "/sets/testCSV/" # Root Directory (MUST END IN "/"!!!)
 
 # Training and Validation Parameters
 batch_size = 32 # Batch size for training and validation
@@ -32,7 +32,7 @@ transform = transform=transforms.Compose([transforms.Resize((height, width)), tr
 # Contrastive Loss Margin
 loss_margin = 1.0
 
-# Max Number of Tests (Is overridden if greater than the length of the test CSV as determined by pandas)
+# Max Number of Tests (Is overridden if greater than the length of the test CSV, as determined by pandas)
 max_tests = 20
 
 # Path used to save and load the model's state
