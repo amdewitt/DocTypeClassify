@@ -15,9 +15,7 @@ import math
 test_dataset = PairwiseDataset(
     config.testing_csv,
     config.testing_dir,
-    transform=transforms.Compose(
-        [transforms.Resize((config.height, config.width)), transforms.ToTensor()]
-    ),
+    transform=config.transform,
 )
 
 # Load the dataset as pytorch tensors using dataloader
@@ -51,7 +49,8 @@ def test():
         if count >= config.max_tests: # Don't go past max tets
             break
 
-# Driver Code, Tests the model's accuracy
+# Main Method
+# Tests the model accuracy
 def __main__():
     net.load_state_dict(torch.load(config.model_path))
     test()

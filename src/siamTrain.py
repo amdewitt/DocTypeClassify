@@ -19,9 +19,7 @@ import numpy
 train_dataset = PairwiseDataset(
     config.training_csv,
     config.training_dir,
-    transform=transforms.Compose(
-        [transforms.Resize((config.height, config.width)), transforms.ToTensor()]
-    ),
+    transform=config.transform,
 )
 
 # Load the dataset as pytorch tensors using dataloader
@@ -36,9 +34,7 @@ train_dataloader = DataLoader(
 eval_dataset = PairwiseDataset(
     config.validation_csv,
     config.validation_dir,
-    transform=transforms.Compose(
-        [transforms.Resize((config.height, config.width)), transforms.ToTensor()]
-    ),
+    transform=config.transform,
 )
 
 # Load the dataset as pytorch tensors using dataloader
@@ -106,7 +102,7 @@ def eval():
     loss = numpy.array(loss)
     return loss.mean()/len(eval_dataloader)
 
-# Driver Code
+# Main Method
 # Trains the model, showing progress along the way
 def __main__():
     print("Model device: " + device + "\n") # Print device
@@ -125,7 +121,7 @@ def __main__():
             torch.save(net.state_dict(), config.model_path)
             print("Model Saved Successfully\n")
             print("-"*20 + "\n")
-    torch.save(net.state_dict(), config.model_path) # Save again (catch-all)
+    torch.save(net.state_dict(), config.model_path) # Save again (catch-all if not saved by evaluation)
     print("Model Saved Successfully\n")
 
 # Driver Code
