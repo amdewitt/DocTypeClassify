@@ -34,6 +34,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # Print de
 # Siamese Network
 net = SiameseModel.to(device)
 
+# Tests the model's accuracy
 def test():
     count = 0
     for data in enumerate(test_dataloader, 0):
