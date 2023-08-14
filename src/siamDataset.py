@@ -68,14 +68,46 @@ class PairwiseDataset():
         return i, j
     
     # Gets the actual length of the csv file
-    def __dfLen__(self):
+    def __dfLen(self):
         return len(self.df)
     
     # Gets the total number of distinct pairs that can be fetched from the csv file
     def __len__(self):
-        n = self.__dfLen__()
+        n = self.__dfLen()
         return int(n * (n - 1) / 2)
 
 # Class used for classification with an input
-class ClassificationDataset():
-    pass
+class PointwiseDataset():
+    # CSV File Format: CSV File Format: Image, Class
+    def __init__(self, csvFile=None, directory=None, transform=None):
+        # Prepare csv file for reading
+        self.df = pd.read_csv(csvFile)
+        self.df.columns = ["image1", "imageClass"]
+        # Set other necessary variables
+        self.dir = directory
+        self.transform = transform
+
+    def __getitem__(self, index):
+        # Overflow code
+        if(index < 0 or index >= self.__len__()):
+            index = 0
+        # Get images
+        img = self.__pathToImage(self.df.iat[index, 0])
+        # Get Classes
+        imgClass = str(self.df.iat[index, 1]).lower()
+        return img, imgClass
+
+    # (Helper) Convert Relative Image Path to Image
+    def __pathToImage(self, rel_path):
+        # open image
+        img_path = os.path.join(self.dir, rel_path)
+        img = Image.open(img_path)
+        # convert images to common format
+        img = img.convert("L")
+        # transform image
+        if self.transform is not None:
+            img = self.transform(img)
+        return img
+    
+    def __len__(self):
+        return len(self.df)
