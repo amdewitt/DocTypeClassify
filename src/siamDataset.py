@@ -25,12 +25,16 @@ class PairwiseDataset():
         self.dir = directory
         self.transform = transform
 
-    def __getitem__(self, index):
+    def __getitem__(self, index): 
         # Overflow code
         if(index < 0 or index >= self.__len__()):
             index = 0
-        # Get indices of image pair
-        index0, index1 = self.__indexToTriMatrixCoords(index)
+        if(len(self.df < 2)): # catch if csv is less than 2 rows long
+            index0 = 0
+            index1 = 0
+        else:
+            # Get indices of image pair
+            index0, index1 = self.__indexToTriMatrixCoords(index)
         # Get images
         img0 = self.__pathToImage(self.df.iat[index0, 0])
         img1 = self.__pathToImage(self.df.iat[index1, 0])
