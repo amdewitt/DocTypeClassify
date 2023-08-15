@@ -37,3 +37,6 @@ max_tests = 20
 
 # Path used to save and load the model's state
 model_path = "/savedModels/model.pth"
+
+# File Types Accepted by Input Dialog
+accepted_input_types = [("PNG files", "*.png"), ("JPG files", "*.jpg"), ("GIF files", "*.gif")]
