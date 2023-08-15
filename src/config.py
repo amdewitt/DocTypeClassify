@@ -17,7 +17,7 @@ validation_dir = "/sets/validationCSV.csv" # Root Directory (MUST END IN "/"!!!)
 
 # Testing 
 testing_csv = "/sets/test/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-testing_dir = "/sets/testCSV/" # Root Directory (MUST END IN "/"!!!)
+testing_dir = "/sets/testCSV.csv" # Root Directory (MUST END IN "/"!!!)
 
 # Training and Validation Parameters
 batch_size = 32 # Batch size for training and validation
