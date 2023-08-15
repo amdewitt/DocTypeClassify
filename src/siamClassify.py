@@ -1,6 +1,6 @@
 # Main Driver
 # Used for classification of the model
-# Gets input image
+# Gets input image(s)
 # Runs input image through test with each image in a pointwise dataset
 # Returns the class with the lowest pairwise distance
 

@@ -8,10 +8,8 @@ import config
 
 import torch
 from torch.utils.data import DataLoader
-import torchvision.transforms as transforms
+#import torchvision.transforms as transforms
 import torch.nn.functional as F
-
-import math
 
 # Testing Dataset
 test_dataset = PairwiseDataset(

@@ -9,14 +9,9 @@
 
 # Imports
 
-import random
-
 from PIL import Image
-#import numpy as np
 import pandas as pd
-#import numpy
 import os
-#import torch
 import math
 
 # Class used for Training and Testing
@@ -63,18 +58,13 @@ class PairwiseDataset():
             return 1, 0
         # Optimized formulas for getting triangular matrix coordinates
         # (sourced from https://stackoverflow.com/questions/40950460/how-to-convert-triangular-matrix-indexes-in-to-row-column-coordinates)
-        i = math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5)
+        i = int(math.ceil(math.sqrt(2 * (index + 1) + 0.25) - 0.5))
         j = int((index + 1) - (i - 1) * i / 2 - 1)
         return i, j
     
-    # Gets the actual length of the csv file
-    def __dfLen(self):
-        return len(self.df)
-    
     # Gets the total number of distinct pairs that can be fetched from the csv file
     def __len__(self):
-        n = self.__dfLen()
-        return int(n * (n - 1) / 2)
+        return int(len(self.df) * (len(self.df) - 1) / 2)
 
 # Class used for classification with an input
 class PointwiseDataset():
@@ -98,9 +88,9 @@ class PointwiseDataset():
         return img, imgClass
 
     # (Helper) Convert Relative Image Path to Image
-    def __pathToImage(self, rel_path):
+    def __pathToImage(self, relative_path):
         # open image
-        img_path = os.path.join(self.dir, rel_path)
+        img_path = os.path.join(self.dir, relative_path)
         img = Image.open(img_path)
         # convert images to common format
         img = img.convert("L")
