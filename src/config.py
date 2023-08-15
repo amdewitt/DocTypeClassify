@@ -11,19 +11,19 @@ import torchvision.transforms as transforms
 
 # Training
 # Root Directory (MUST END IN "/"!!!)
-training_dir = "/sets/demoImages/images/"
+training_dir = "/sets/demoImages/"
 # Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
 training_csv = "/sets/demoTrainingCSV.csv"
 
 # Validation
 # Root Directory (MUST END IN "/"!!!)
-validation_dir = "/sets/demoImages/images/"
+validation_dir = "/sets/demoImages/"
 # Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
 validation_csv = "/sets/demoValidationCSV.csv"
 
 # Testing 
 # Root Directory (MUST END IN "/"!!!)
-testing_dir = "/sets/demoImages/images/"
+testing_dir = "/sets/demoImages/"
 # Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
 testing_csv = "/sets/demoTestingCSV.csv"
 
