@@ -1,16 +1,15 @@
 # Driver file for training and validating the model
 
 # Imports
-from siamDataset import PairwiseDataset
+from siamDataset import PairwiseDataset # Required Network Modules
 from siamBaseModel import SiameseModel
 from siamLoss import ContrastiveLoss
-import config
+import config # config.py, stores variables that are commonly used in model code
 
-import torch
+import torch # Required Ultlity Modules
 from torch.utils.data import DataLoader
 #import torchvision.transforms as transforms
 import numpy
-
 #import matplotlib
 
 # Variable Definitions
@@ -73,11 +72,15 @@ def train():
         optimizer.zero_grad()
         # Pass images through model
         output0, output1 = net(img0, img1)
-        # Incur loss as needed, then backpropogate and optimize
+        # Incur loss as needed
         contrastive_loss = loss(output0, output1, label)
+        # Backpropogate to calculate model gradients
         contrastive_loss.backward()
+        # Use optimizer to update model weights
         optimizer.step()
+        # Add loss item to loss aray
         loss.append(contrastive_loss.item())
+    # return average loss
     loss = numpy.array(loss)
     return loss.mean()/len(train_dataloader)
 
@@ -98,7 +101,9 @@ def eval():
         output0, output1 = net(img0, img1)
         # Incur loss as needed
         contrastive_loss = loss(output0, output1, label)
+        # Add loss item to loss aray
         loss.append(contrastive_loss.item())
+    # return average loss
     loss = numpy.array(loss)
     return loss.mean()/len(eval_dataloader)
 
@@ -115,7 +120,7 @@ def __main__():
         print(f"Training Loss: {train_loss}\n") # Print Losses
         print(f"Validation Loss: {eval_loss}\n")
         print("-"*20 + "\n")
-        if(eval_loss < best_eval_loss): # Save only if BEL is surpassed
+        if(eval_loss < best_eval_loss): # Save only if Best Evaluation Loss is surpassed
             best_eval_loss = eval_loss
             print("Best Validation Loss: {}".format(best_eval_loss))
             torch.save(net.state_dict(), config.model_path)

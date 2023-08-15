@@ -7,17 +7,27 @@ import torchvision.transforms as transforms
 ####################################################################################
 # Configuration Variables
 
+### Datasets ###
+
 # Training
-training_csv = "/sets/demoTrain/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-training_dir = "/sets/demoTrainCSV.csv" # Root Directory (MUST END IN "/"!!!)
+# Root Directory (MUST END IN "/"!!!)
+training_dir = "/sets/demoImages/images/"
+# Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
+training_csv = "/sets/demoTrainingCSV.csv"
 
 # Validation
-validation_csv = "/sets/demoValidation/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-validation_dir = "/sets/demoValidationCSV.csv" # Root Directory (MUST END IN "/"!!!)
+# Root Directory (MUST END IN "/"!!!)
+validation_dir = "/sets/demoImages/images/"
+# Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
+validation_csv = "/sets/demoValidationCSV.csv"
 
 # Testing 
-testing_csv = "/sets/demoTest/" # Points to the images in directory that are being used. CSV Format: Image Path (Relative to Root Directory), Class
-testing_dir = "/sets/demoTestCSV.csv" # Root Directory (MUST END IN "/"!!!)
+# Root Directory (MUST END IN "/"!!!)
+testing_dir = "/sets/demoImages/images/"
+# Points to the images in directory that are being used. CSV Format: Relative Image Path, Image Class
+testing_csv = "/sets/demoTestingCSV.csv"
+
+### Model Parameters ###
 
 # Training and Validation Parameters
 batch_size = 32 # Batch size for training and validation
@@ -36,7 +46,7 @@ loss_margin = 1.0
 max_tests = 20
 
 # Path used to save and load the model's state
-model_path = "/savedModels/modelDemoWTaikyokuMnemPieces.pth"
+model_path = "/savedModels/modelDemo.pth"
 
 # File Types Accepted by Input Dialog
 accepted_input_types = [("PNG files", "*.png"), ("JPG files", "*.jpg"), ("GIF files", "*.gif")]

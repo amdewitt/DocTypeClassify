@@ -2,11 +2,11 @@
 
 # Imports
 
-from siamDataset import PairwiseDataset
+from siamDataset import PairwiseDataset # Required Network Modules
 from siamBaseModel import SiameseModel
-import config
+import config # config.py, stores variables that are commonly used in model code
 
-import torch
+import torch # Required Ultlity Modules
 from torch.utils.data import DataLoader
 #import torchvision.transforms as transforms
 import torch.nn.functional as F
@@ -42,7 +42,7 @@ def test():
         if class0 == class1:
             label = "Same Classes"
         output0, output1 = net(img0, img1) # Get Embeddings
-        eucledian_distance = F.pairwise_distance(output0, output1) # Get Distance
+        eucledian_distance = F.pairwise_distance(output0, output1) # Get Pairwise Distance
         print("Class of Image 0: {}, Class of Image 1: {}, Label: {}".format(class0, class1, label)) # Print Results
         print("Predicted Eucledian Distance: {}\n".format(eucledian_distance.item()))
         count += 1
