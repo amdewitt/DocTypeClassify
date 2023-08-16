@@ -45,6 +45,7 @@ def test():
         eucledian_distance = F.pairwise_distance(output0, output1) # Get Pairwise Distance
         print("Class of Image 0: {}, Class of Image 1: {}, Label: {}".format(class0, class1, label)) # Print Results
         print("Predicted Eucledian Distance: {}\n".format(eucledian_distance.item()))
+        print("-"*20 + "\n")
         count += 1
         if count >= config.max_tests: # Don't go past max tets
             break
