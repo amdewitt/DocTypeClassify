@@ -60,7 +60,7 @@ def train():
     loss = np.array(loss)
     return loss.mean()/len(train_dataloader)
 
-def eval():
+"""def eval():
     loss = []
     for i, data in enumerate(eval_dataloader, 0):
         img0, img1, label = data
@@ -69,25 +69,25 @@ def eval():
         contrastive_loss = lossFunction(output1, output2, label)
         loss.append(contrastive_loss.item())
     loss = np.array(loss)
-    return loss.mean()/len(train_dataloader)
+    return loss.mean()/len(train_dataloader)"""
 
 def __main__():
     print("-"*20)
     for epoch in range(0, siamConfig.epochs):
-        best_eval_loss = 99999
+        #best_eval_loss = 99999
         train_loss = train()
-        eval_loss = eval()
+        #eval_loss = eval()
 
         print(f"Training Loss: {train_loss}")
-        print(f"Validation Loss: {eval_loss}")
+        #print(f"Validation Loss: {eval_loss}")
         print("-"*20)
 
-        if eval_loss < best_eval_loss:
+        """if eval_loss < best_eval_loss:
             best_eval_loss = eval_loss
             print(f"Best Validation Loss: {best_eval_loss}")
             torch.save(net.state_dict(), siamConfig.model_path)
             print("Model Saved Successfully")
-            print("-"*20)
+            print("-"*20)"""
 
     torch.save(net.state_dict(), siamConfig.model_path)
     print("Model Saved Successfully")

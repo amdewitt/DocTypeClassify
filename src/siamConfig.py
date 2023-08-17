@@ -37,9 +37,9 @@ train_batch_size = 32
 
 # Validation Dataloader Parameters
 
-eval_shuffle = False
-eval_num_workers = train_num_workers
-eval_batch_size = train_batch_size
+#eval_shuffle = False
+#eval_num_workers = train_num_workers
+#eval_batch_size = train_batch_size
 
 # Testing Parameters
 max_tests = 10
