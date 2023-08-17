@@ -1,4 +1,5 @@
 #import os
+from torch.utils.data import Dataset
 import pandas
 import math
 
@@ -6,8 +7,9 @@ import siamUtils
 
 # Pairwise dataset used for training and testing
 # CSV Format: Image, Class
-class SiameseDataset():
+class SiameseDataset(Dataset):
     def __init__(self, csvFile = None, directory = None, transform = None):
+        super(SiameseDataset, self).__init__()
         self.df = pandas.read_csv(csvFile) # Read CSV File
         self.df.columns = ["ImagePath", "ImageClass"] # Initialize Columns
         self.dir = directory
@@ -42,8 +44,9 @@ class SiameseDataset():
     
 # Used for image classification with an input image
 # CSV Format: Relative Image Path, Image Class
-class ClassificationDataset():
+class ClassificationDataset:
     def __init__(self, inputPath = None, csvFile = None, directory = None, transform = None):
+        #super(ClassificationDataset, self).__init__()
         self.input_image_path = inputPath
         self.df = pandas.read_csv(csvFile) # Read CSV File
         self.df.columns = ["ImagePath", "ImageClass"] # Initialize Columns
