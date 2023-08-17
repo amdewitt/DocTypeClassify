@@ -39,8 +39,7 @@ class SiameseModel(nn.Module):
             nn.ReLU(inplace=True),
            
             nn.Linear(128,2),
-            #nn.Linear(2, 1),
-            #nn.Sigmoid(),
+            nn.Sigmoid(),
         )
         
     def forward_once(self, x):

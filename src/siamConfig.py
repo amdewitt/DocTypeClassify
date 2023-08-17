@@ -2,6 +2,7 @@
 
 # Imports
 
+import torch
 import torchvision.transforms as transforms # Needed for image transform
 
 ### Datasets ###
@@ -47,3 +48,6 @@ max_tests = 10
 test_shuffle = False
 test_num_workers = 6
 test_batch_size = 1
+
+# Model State Dictionary Path
+model_path = "/savedModels/demoModel.pth"
