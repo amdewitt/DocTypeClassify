@@ -26,11 +26,7 @@ class SiameseDataset(Dataset):
         class0 = str(self.df.iat[index0, 1])
         class1 = str(self.df.iat[index1, 1])
 
-        label = 1
-        if class0 == class1:
-            label = 0
-
-        return img0, img1, label
+        return img0, img1, class0, class1
         
     def __len__(self):
         n = len(self.df)

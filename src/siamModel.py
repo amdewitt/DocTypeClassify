@@ -17,7 +17,7 @@ class SiameseModel(nn.Module):
             nn.ReLU(inplace=True),
             nn.LocalResponseNorm(5,alpha=0.0001,beta=0.75,k=2),
             nn.MaxPool2d(3, stride=2),
-            nn.Dropout2d(p=0.3),
+            nn.Dropout(p=0.3),
 
             nn.Conv2d(256,384 , kernel_size=3,stride=1,padding=1),
             nn.ReLU(inplace=True),
@@ -25,13 +25,13 @@ class SiameseModel(nn.Module):
             nn.Conv2d(384,256 , kernel_size=3,stride=1,padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(3, stride=2),
-            nn.Dropout2d(p=0.3),
+            nn.Dropout(p=0.3),
         )
         # Defining the fully connected layers
         self.fc1 = nn.Sequential(
             nn.Linear(30976, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout2d(p=0.5),
+            nn.Dropout(p=0.5),
            
             nn.Linear(1024, 128),
             nn.ReLU(inplace=True),

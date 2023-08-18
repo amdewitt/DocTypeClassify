@@ -21,6 +21,9 @@ test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image
 
 ### Model Configuration Parameters ###
 
+# Device
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 # Image Transform Parameters
 width = 105
 height = 105
