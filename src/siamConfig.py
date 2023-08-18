@@ -50,4 +50,4 @@ test_num_workers = 6
 test_batch_size = 1
 
 # Model State Dictionary Path
-model_path = "savedModels\\demoModel.pth"
+model_path = "..\\savedModels\\demoModel.pth"
