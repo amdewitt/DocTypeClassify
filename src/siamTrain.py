@@ -15,7 +15,7 @@ from siamContrastiveLoss import ContrastiveLoss
 train_dataset = SiameseDataset(
     csvFile = siamConfig.train_csv,
     directory = siamConfig.train_dir,
-    transform = siamConfig.transform
+    transform = siamConfig.transform,
 )
 
 train_dataloader = DataLoader(
@@ -28,7 +28,7 @@ train_dataloader = DataLoader(
 eval_dataset = SiameseDataset(
     csvFile = siamConfig.eval_csv,
     directory = siamConfig.eval_dir,
-    transform = siamConfig.transform
+    transform = siamConfig.transform,
 )
 
 eval_dataloader = DataLoader(
@@ -52,7 +52,7 @@ def train():
         img0, img1, label = data
         img0, img1, label = img0.cuda(), img1.cuda(), label.cuda()
         optimizer.zero_grad()
-        output1, output2 = net(img0, img1)
+        output1, output2 = net.forward(img0, img1)
         contrastive_loss = lossFunction(output1, output2, label)
         contrastive_loss.backward()
         optimizer.step()
@@ -72,8 +72,6 @@ def eval():
     return loss.mean()/len(train_dataloader)
 
 def __main__():
-    print("Training Model")
-    print("-"*20)
     for epoch in range(0, siamConfig.epochs):
         best_eval_loss = 99999
         train_loss = train()
@@ -93,10 +91,6 @@ def __main__():
 
     torch.save(net.state_dict(), siamConfig.model_path)
     print("Model Saved Successfully")
-
-        
-
-
-
+      
 if __name__ == "__main__":
     __main__()

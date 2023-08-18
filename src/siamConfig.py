@@ -8,16 +8,16 @@ import torchvision.transforms as transforms # Needed for image transform
 ### Datasets ###
 
 # Training
-train_dir = "" # Root Directory
-train_csv = "" # CSV File Pointing to Images (Format: Image,Class)
+train_dir = "sets\\tkPieceImages\\" # Root Directory
+train_csv = "csvFiles\\demoTrain.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 # Validation
-eval_dir = "" # Root Directory
-eval_csv = "" # CSV File Pointing to Images (Format: Image,Class)
+eval_dir = "sets\\tkPieceImages\\" # Root Directory
+eval_csv = "csvFiles\\demoEval.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 # Testing
-test_dir = "" # Root Directory
-test_csv = "" # CSV File Pointing to Images (Format: Image,Class)
+test_dir = "sets\\tkPieceImages\\" # Root Directory
+test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 ### Model Configuration Parameters ###
 
@@ -37,9 +37,9 @@ train_batch_size = 32
 
 # Validation Dataloader Parameters
 
-#eval_shuffle = False
-#eval_num_workers = train_num_workers
-#eval_batch_size = train_batch_size
+eval_shuffle = False
+eval_num_workers = train_num_workers
+eval_batch_size = train_batch_size
 
 # Testing Parameters
 max_tests = 10
@@ -50,4 +50,4 @@ test_num_workers = 6
 test_batch_size = 1
 
 # Model State Dictionary Path
-model_path = "/savedModels/demoModel.pth"
+model_path = "savedModels\\demoModel.pth"

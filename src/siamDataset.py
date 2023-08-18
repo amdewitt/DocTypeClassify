@@ -1,4 +1,4 @@
-#import os
+import os
 from torch.utils.data import Dataset
 import pandas
 import math
@@ -15,13 +15,13 @@ class SiameseDataset(Dataset):
         self.dir = directory
         self.transform = transform
 
-    def __getItem__(self, index):
+    def __getitem__(self, index):
         if index < 0 or index > self.__len__():
             index0, index1 = 0,0
         else:
             index0, index1 = self.__indexToTriMatrixCoords(index)
-        img0 = siamUtils.imagePathToImage(self.df.iat[index0, 0], transform = self.transform, rootDir = self.dir)
-        img1 = siamUtils.imagePathToImage(self.df.iat[index1, 0], transform = self.transform, rootDir = self.dir)
+        img0 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index0, 0]), transform = self.transform)
+        img1 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index1, 0]), transform = self.transform)
 
         class0 = str(self.df.iat[index0, 1])
         class1 = str(self.df.iat[index1, 1])
@@ -32,15 +32,15 @@ class SiameseDataset(Dataset):
 
         return img0, img1, label
         
+    def __len__(self):
+        n = len(self.df)
+        return int(n * (n - 1) / 2)
+    
     # Gets distinct pair of indices from single index
     def __indexToTriMatrixCoords(self, index):
         i = int(math.ceil(math.sqrt(2 * int(index + 1) + 0.25) - 0.5)) # Upper Index
         j = int(int(index) - (i - 1) * i / 2) # Lower Index
         return i, j
-        
-    def __len__(self):
-        n = len(self.df)
-        return n * (n - 1) / 2
     
 # Used for image classification with an input image
 # CSV Format: Relative Image Path, Image Class
