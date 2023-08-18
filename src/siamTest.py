@@ -1,5 +1,6 @@
 # Imports
 
+from typing import Concatenate
 import siamConfig
 import siamUtils
 from siamDataset import SiameseDataset
@@ -32,6 +33,7 @@ def __main__():
     count = 0
     for i, data in enumerate(test_dataloader, 0):
         img0, img1, class0, class1 = data
+        concat = torch.cat((img0, img1), 0)
         label = 1
         if class0 == class1:
             label = 0
@@ -45,11 +47,14 @@ def __main__():
             printLabel = "Similar"
 
         siamUtils.imshow(torchvision.utils.make_grid(concat))
+        img0_path, img1_path = test_dataset.__getItemPaths__(i)
+        print(f"Image 0: {img0_path}, Class of Image 0: {class0}\nImage 0: {img1_path}, Class of Image 0: {class1}")
         print(f"Predicted Euclideam Distance: {euclidean_distance.item()}")
         print(f"Actual Label: {printLabel}")
-        count += 1
-        if count >= siamConfig.max_tests:
-            break
+        if siamConfig.max_tests > 0:
+            count += 1
+            if count >= siamConfig.max_tests:
+                break
 
 if __name__ == "__main__":
     __main__()

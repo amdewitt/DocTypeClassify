@@ -45,7 +45,7 @@ eval_num_workers = train_num_workers
 eval_batch_size = train_batch_size
 
 # Testing Parameters
-max_tests = 10
+max_tests = 10 # Any value < 1 causes a full test run
 
 # Testing Dataloader Parameters
 test_shuffle = False

@@ -91,8 +91,6 @@ def __main__():
         if eval_loss < best_eval_loss:
             best_eval_loss = eval_loss
             print(f"Best Validation Loss: {best_eval_loss}")
-            torch.save(net.state_dict(), siamConfig.model_path)
-            print("Model Saved Successfully")
             print("-"*20)
 
     torch.save(net.state_dict(), siamConfig.model_path)

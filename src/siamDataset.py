@@ -27,6 +27,13 @@ class SiameseDataset(Dataset):
         class1 = str(self.df.iat[index1, 1])
 
         return img0, img1, class0, class1
+    
+    def __getItemPaths__(self, index):
+        if index < 0 or index > self.__len__():
+            index0, index1 = 0,0
+        else:
+            index0, index1 = self.__indexToTriMatrixCoords(index)
+        return os.path.join(self.dir, self.df.iat[index0, 0]), os.path.join(self.dir, self.df.iat[index1, 0])
         
     def __len__(self):
         n = len(self.df)
