@@ -8,15 +8,15 @@ import torchvision.transforms as transforms # Needed for image transform
 ### Datasets ###
 
 # Training
-train_dir = "sets\\tkPieceImages\\" # Root Directory
+train_dir = "sets\\mnemPieceImages\\" # Root Directory
 train_csv = "csvFiles\\demoTrain.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 # Validation
-eval_dir = "sets\\tkPieceImages\\" # Root Directory
+eval_dir = "sets\\mnemPieceImages\\" # Root Directory
 eval_csv = "csvFiles\\demoEval.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 # Testing
-test_dir = "sets\\tkPieceImages\\" # Root Directory
+test_dir = "sets\\mnemPieceImages\\" # Root Directory
 test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 ### Model Configuration Parameters ###

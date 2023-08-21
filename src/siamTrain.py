@@ -49,11 +49,8 @@ lossFunction = ContrastiveLoss(siamConfig.loss_margin)
 def train():
     loss = []
     for i, data in enumerate(train_dataloader, 0):
-        img0, img1, class0, class1 = data
-        label = 1
-        if class0 == class1:
-            label = 0
-        img0, img1 = img0.to(siamConfig.device), img1.to(siamConfig.device)
+        img0, img1, label = data
+        img0, img1, label = img0.to(siamConfig.device), img1.to(siamConfig.device), label.to(siamConfig.device)
         optimizer.zero_grad()
         output1, output2 = net.forward(img0, img1)
         contrastive_loss = lossFunction(output1, output2, label)
@@ -66,11 +63,8 @@ def train():
 def eval():
     loss = []
     for i, data in enumerate(eval_dataloader, 0):
-        img0, img1, class0, class1 = data
-        label = 1
-        if class0 == class1:
-            label = 0
-        img0, img1 = img0.to(siamConfig.device), img1.to(siamConfig.device)
+        img0, img1, label = data
+        img0, img1, label = img0.to(siamConfig.device), img1.to(siamConfig.device), label.to(siamConfig.device)
         output1, output2 = net(img0, img1)
         contrastive_loss = lossFunction(output1, output2, label)
         loss.append(contrastive_loss.item())
@@ -92,6 +86,8 @@ def __main__():
             best_eval_loss = eval_loss
             print(f"Best Validation Loss: {best_eval_loss}")
             print("-"*20)
+            torch.save(net.state_dict(), siamConfig.model_path)
+            print("Model Saved Successfully")
 
     torch.save(net.state_dict(), siamConfig.model_path)
     print("Model Saved Successfully")
