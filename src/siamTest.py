@@ -2,7 +2,6 @@
 
 from typing import Concatenate
 import siamConfig
-import siamUtils
 from siamDataset import SiameseDataset
 from torch.utils.data import DataLoader
 from siamModel import SiameseModel
@@ -10,6 +9,9 @@ from siamModel import SiameseModel
 import torch
 import torch.nn.functional as F
 import torchvision
+
+import numpy
+import matplotlib.pyplot as plt
 
 # Variables
 
@@ -27,6 +29,22 @@ test_dataloader = DataLoader(
 )
 
 net = SiameseModel().to(siamConfig.device)
+
+# Shows image Pairs
+def imshow(img, text=None, should_save=False):
+    npimg = img.numpy()
+    plt.axis("off")
+    if text:
+        plt.text(
+            75,
+            8,
+            text,
+            style="italic",
+            fontweight="bold",
+            bbox={"facecolor": "white", "alpha": 0.8, "pad": 10},
+        )
+    plt.imshow(numpy.transpose(npimg, (1, 2, 0)))
+    plt.show()
 
 def __main__():
     net.load_state_dict(torch.load(siamConfig.model_path))
@@ -48,7 +66,8 @@ def __main__():
         print(f"Image 0: {img0_path}, Class of Image 0: {class0}\nImage 1: {img1_path}, Class of Image 1: {class1}")
         print(f"Predicted Euclideam Distance: {euclidean_distance.item()}")
         print(f"Actual Label: {printLabel}")
-        siamUtils.imshow(torchvision.utils.make_grid(concat))
+        print("-"*20)
+        imshow(torchvision.utils.make_grid(concat))
         if siamConfig.max_tests > 0:
             count += 1
             if count >= siamConfig.max_tests:
