@@ -32,25 +32,23 @@ def __main__():
     net.load_state_dict(torch.load(siamConfig.model_path))
     count = 0
     for i, data in enumerate(test_dataloader, 0):
-        img0, img1, class0, class1 = data
-        concat = torch.cat((img0, img1), 0)
-        label = 1
-        if class0 == class1:
-            label = 0
-        img0, img1 = img0.to(siamConfig.device), img1.to(siamConfig.device)
+        img0, img1, label, class0, class1 = data
+        concat = torch.cat((img0,img1),0)
+        img0, img1, label = img0.to(siamConfig.device), img1.to(siamConfig.device), label.to(siamConfig.device)
 
         output0, output1 = net(img0, img1)
         euclidean_distance = F.pairwise_distance(output0, output1)
 
-        printLabel = "Dissimilar"
-        if label == 0:
+        if label == torch.FloatTensor([[0]]).to(siamConfig.device):
             printLabel = "Similar"
+        else:
+            printLabel = "Dissimilar"
 
-        siamUtils.imshow(torchvision.utils.make_grid(concat))
         img0_path, img1_path = test_dataset.__getItemPaths__(i)
-        print(f"Image 0: {img0_path}, Class of Image 0: {class0}\nImage 0: {img1_path}, Class of Image 0: {class1}")
+        print(f"Image 0: {img0_path}, Class of Image 0: {class0}\nImage 1: {img1_path}, Class of Image 1: {class1}")
         print(f"Predicted Euclideam Distance: {euclidean_distance.item()}")
         print(f"Actual Label: {printLabel}")
+        siamUtils.imshow(torchvision.utils.make_grid(concat))
         if siamConfig.max_tests > 0:
             count += 1
             if count >= siamConfig.max_tests:

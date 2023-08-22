@@ -32,6 +32,7 @@ transform = transforms.Compose([transforms.Resize((height, width)), transforms.T
 # Training Parameters
 epochs = 20
 loss_margin = 1.0
+save_on_new_best_loss = False
 
 # Training Dataloader Parameters
 train_shuffle = True
@@ -45,11 +46,11 @@ eval_num_workers = train_num_workers
 eval_batch_size = train_batch_size
 
 # Testing Parameters
-max_tests = 10 # Any value < 1 causes a full test run
+max_tests = 0 # Any value < 1 causes a full test run
 
 # Testing Dataloader Parameters
 test_shuffle = False
-test_num_workers = 6
+test_num_workers = 0
 test_batch_size = 1
 
 # Model State Dictionary Path

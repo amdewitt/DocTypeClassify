@@ -9,6 +9,8 @@ relativeImagePath1,imageClass1
 relativeImagePath2,imageClass2
 ...
 
+Note: DO NOT include headers inthe CSV file. Failure to do so will cause the CSV reader to interpret the headers as rows, and will more than likely cause an error.
+
 relativeImagePathN is an image path with the file extension (.xxx, such as .png), relative to the root directory as specified in the siamConfig.py file.
 imageClassN is the class that relativeImagePathN's image belong's to. The class is case-insensitive (class = CLASS = ClAsS).
 
