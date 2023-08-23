@@ -16,7 +16,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 transform = transforms.Compose([transforms.Resize((siamConfig.height, siamConfig.width)), transforms.ToTensor()])
 
 # Converts an image path to the corresponding image tensor
-def imagePathToImage(imgPath=None):
+def imagePathToImage(imgPath):
     path = str(imgPath)
 
     img = Image.open(path)

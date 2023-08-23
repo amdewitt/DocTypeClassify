@@ -29,8 +29,8 @@ class SiameseDataset:
     def __getitem__(self, index):
         index0, index1 = self.__indexToTriMatrixCoords(index)
 
-        img0 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index0, 0]), transform = self.transform)
-        img1 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index1, 0]), transform = self.transform)
+        img0 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index0, 0]))
+        img1 = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index1, 0]))
 
         class0 = str(self.df.iat[index0, 1]).lower()
         class1 = str(self.df.iat[index1, 1]).lower()
