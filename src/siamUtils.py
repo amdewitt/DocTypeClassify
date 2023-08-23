@@ -1,3 +1,6 @@
+# Stores utility functions and variables needed for the model to work properly
+# LEAVE AS IS
+
 # Imports
 
 import torch
