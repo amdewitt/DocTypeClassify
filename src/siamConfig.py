@@ -1,10 +1,5 @@
 # Stores commonly-used variables needed for the model to function properly
 
-# Imports
-
-import torch
-import torchvision.transforms as transforms # Needed for image transform
-
 ### Datasets ###
 
 # Training
@@ -21,13 +16,9 @@ test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image
 
 ### Model Configuration Parameters ###
 
-# Device
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 # Image Transform Parameters
 width = 105
 height = 105
-transform = transforms.Compose([transforms.Resize((height, width)), transforms.ToTensor()])
 
 # Training Parameters
 epochs = 20
@@ -47,6 +38,8 @@ eval_batch_size = train_batch_size
 
 # Testing Parameters
 max_tests = 0 # Any value < 1 causes a full test run
+dissimilar_prediction_threshold = 0.5
+include_threshold = False
 
 # Testing Dataloader Parameters
 test_shuffle = False
@@ -55,3 +48,6 @@ test_batch_size = 1
 
 # Model State Dictionary Path
 model_path = "..\\savedModels\\demoModel.pth"
+
+# Accepted Input Types
+accepted_input_types = [("PNG files", "*.png"),("JPG files", "*.jpg"),("GIF files", "*.gif")]

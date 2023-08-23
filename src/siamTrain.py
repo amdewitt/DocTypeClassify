@@ -4,9 +4,8 @@ import torch
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import numpy as np
-#import siamUtils
-import math
 import siamConfig
+import siamUtils
 from siamModel import SiameseModel
 from siamDataset import SiameseDataset
 from siamContrastiveLoss import ContrastiveLoss
@@ -16,7 +15,7 @@ from siamContrastiveLoss import ContrastiveLoss
 train_dataset = SiameseDataset(
     csvFile = siamConfig.train_csv,
     directory = siamConfig.train_dir,
-    transform = siamConfig.transform,
+    transform = siamUtils.transform,
 )
 
 train_dataloader = DataLoader(
@@ -29,7 +28,7 @@ train_dataloader = DataLoader(
 eval_dataset = SiameseDataset(
     csvFile = siamConfig.eval_csv,
     directory = siamConfig.eval_dir,
-    transform = siamConfig.transform,
+    transform = siamUtils.transform,
 )
 
 eval_dataloader = DataLoader(
@@ -39,7 +38,7 @@ eval_dataloader = DataLoader(
     batch_size = siamConfig.eval_batch_size
 )
 
-net = SiameseModel().to(siamConfig.device)
+net = SiameseModel().to(siamUtils.device)
 
 optimizer = torch.optim.Adam(net.parameters(), lr=1e-3, weight_decay=0.0005)
 
@@ -51,7 +50,7 @@ def train():
     loss = []
     for i, data in enumerate(train_dataloader, 0):
         img0, img1, label, class0, class1 = data
-        img0, img1, label = img0.to(siamConfig.device), img1.to(siamConfig.device), label.to(siamConfig.device)
+        img0, img1, label = img0.to(siamUtils.device), img1.to(siamUtils.device), label.to(siamUtils.device)
         optimizer.zero_grad()
         output1, output2 = net.forward(img0, img1)
         contrastive_loss = lossFunction(output1, output2, label)
@@ -65,7 +64,7 @@ def eval():
     loss = []
     for i, data in enumerate(eval_dataloader, 0):
         img0, img1, label, class0, class1 = data
-        img0, img1, label = img0.to(siamConfig.device), img1.to(siamConfig.device), label.to(siamConfig.device)
+        img0, img1, label = img0.to(siamUtils.device), img1.to(siamUtils.device), label.to(siamUtils.device)
         output1, output2 = net(img0, img1)
         contrastive_loss = lossFunction(output1, output2, label)
         loss.append(contrastive_loss.item())
