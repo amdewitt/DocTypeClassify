@@ -16,6 +16,9 @@ test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image
 
 ### Model Configuration Parameters ###
 
+# CSV Reader Parameters
+treat_first_line_as_header = False
+
 # Image Transform Parameters
 width = 105
 height = 105

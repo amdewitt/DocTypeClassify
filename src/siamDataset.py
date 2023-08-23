@@ -5,6 +5,7 @@ import torch
 import numpy
 import math
 
+import siamConfig
 import siamUtils
     
 # Used for image classification with an input image
@@ -12,7 +13,10 @@ import siamUtils
 class SiameseDataset:
     def __init__(self, csvFile = None, directory = None, transform = None):
         #super(ClassificationDataset, self).__init__()
-        self.df = pandas.read_csv(csvFile, header=None) # Read CSV File (headers not included in file)
+        if siamConfig.treat_first_line_as_header == False:
+            self.df = pandas.read_csv(csvFile, header=None) # Read CSV File (headers not included in file)
+        else:
+            self.df = pandas.read_csv(csvFile)
         self.df.columns = ["ImagePath", "imageClass"] # Initialize Columns
         self.dir = directory
         self.transform = transform
