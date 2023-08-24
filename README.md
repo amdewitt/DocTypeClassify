@@ -49,4 +49,3 @@ After accepting both inputs, siamCompareImagePairs.py will iterate over each dis
 Takesa a set of input image, prompted by a dialog.
 
 For each image in the set, siamClassify.py pairs the input with each image in the testing CSV file, and returns the class with the lowest distance.
-
