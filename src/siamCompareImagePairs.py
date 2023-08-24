@@ -15,10 +15,10 @@ from torch.utils.data import DataLoader
 net = SiameseModel().to(siamUtils.device)
 
 def __main__():
-    print("Enter Root Directory")
+    print("Enter Root Directory (Must already exist within file system)")
     rootDir = filedialog.askdirectory(mustexist=True)
-    print("Open Image Set CSV (Must have at least 2 images)")
-    paths_csv = filedialog.askopenfilename(title="Open CSV (No header, Format: relativeImagePath)", filetypes=[("CSV files", "*.csv")])
+    print("Open Image Set CSV (Must have at least 2 images). CSV Format:\nHeader\nrelativeImagePath0\nrelativeImagePath1\n...")
+    paths_csv = filedialog.askopenfilename(title="Open Image Set CSV", filetypes=[("CSV files", "*.csv")])
 
     # Variables
 
@@ -37,7 +37,7 @@ def __main__():
 
     print("--------------------")
     if(dataset.__len__() < 2):
-        "ERROR: CSV must have at least 2 rows."
+        "ERROR: CSV File must have at least 2 non-header rows."
         return
     for i, data in enumerate(dataloader, 0):
         img0, img1 = data
