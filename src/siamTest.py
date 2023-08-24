@@ -10,9 +10,6 @@ import torch
 import torch.nn.functional as F
 import torchvision
 
-import numpy
-import matplotlib.pyplot as plt
-
 # Variables
 
 test_dataset = SiameseDataset(
@@ -23,7 +20,7 @@ test_dataset = SiameseDataset(
 
 test_dataloader = DataLoader(
     test_dataset,
-    shuffle=siamConfig.test_shuffle,
+    shuffle = siamConfig.test_shuffle,
     num_workers = siamConfig.test_num_workers,
     batch_size = siamConfig.test_batch_size
 )

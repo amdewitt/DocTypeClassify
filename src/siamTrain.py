@@ -20,7 +20,7 @@ train_dataset = SiameseDataset(
 
 train_dataloader = DataLoader(
     train_dataset,
-    shuffle=siamConfig.train_shuffle,
+    shuffle = siamConfig.train_shuffle,
     num_workers = siamConfig.train_num_workers,
     batch_size = siamConfig.train_batch_size
 )

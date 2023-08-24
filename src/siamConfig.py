@@ -14,6 +14,10 @@ eval_csv = "csvFiles\\demoEval.csv" # CSV File Pointing to Images (Format: Image
 test_dir = "sets\\mnemPieceImages\\" # Root Directory
 test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image,Class)
 
+# Classification
+classify_dir = "sets\\mnemPieceImages\\" # Root Directory
+classify_csv = "csvFiles\\demoClassify.csv" # CSV File Pointing to Images (Format: Image,Class)
+
 ### Model Configuration Parameters ###
 
 # CSV Reader Parameters
@@ -26,7 +30,7 @@ height = 105
 # Training Parameters
 epochs = 20
 loss_margin = 1.0
-save_on_new_best_loss = False
+save_on_new_best_loss = True
 
 # Training Dataloader Parameters
 train_shuffle = True
