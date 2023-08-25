@@ -10,14 +10,11 @@ class ContrastiveLoss(nn.Module):
         self.margin = margin
 
     # Loss 
-    def forward(self, x0, x1, y):
-        # euclidian distance
-        diff = x0-x1
-        dist_sq = torch.sum(torch.pow(diff, 2), 1)
-        dist = torch.sqrt(dist_sq)
-
-        mdist = self.margin - dist
-        dist = torch.clamp(mdist, min=0.0)
-        loss = y * dist_sq + (1 - y) * torch.pow(dist, 2)
-        loss = torch.sum(loss) / 2.0 / x0.size()[0]
-        return loss
+    def forward(self, output1, output2, label):
+        euclidean_distance = F.pairwise_distance(output1, output2)
+        loss_contrastive = torch.mean(
+            (1 - label) * torch.pow(euclidean_distance, 2)
+            + (label)
+            * torch.pow(torch.clamp(self.margin - euclidean_distance, min=0.0), 2)
+        )
+        return loss_contrastive
