@@ -35,7 +35,7 @@ Takes an existing directory and a CSV file, in that order. Both are prompted by 
 
 The CSV file should be written in the following format:
 
-Header
+Header (include directory here for reference)
 relativeImagePath0
 relativeImagePath1
 relativeImagePath2
