@@ -28,7 +28,7 @@ width = 105
 height = 105
 
 # Training Parameters
-epochs = 20
+epochs = 10
 loss_margin = 1.0
 save_on_new_best_loss = True
 
@@ -44,7 +44,7 @@ eval_num_workers = train_num_workers
 eval_batch_size = train_batch_size
 
 # Testing Parameters
-max_tests = 0 # Any value < 1 causes a full test run
+max_tests = 10 # Any value < 1 causes a full test run
 dissimilar_prediction_threshold = 2.0
 include_threshold = False
 
