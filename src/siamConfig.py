@@ -45,7 +45,7 @@ eval_batch_size = train_batch_size
 
 # Testing Parameters
 max_tests = 10 # Any value < 1 causes a full test run
-dissimilar_prediction_threshold = 0.25
+dissimilar_prediction_threshold = 0.5
 include_threshold = False
 
 # Testing Dataloader Parameters
