@@ -39,7 +39,7 @@ def __main__():
         euclidean_distance = F.pairwise_distance(output0, output1)
 
         img0_path, img1_path = test_dataset.__getItemPaths__(i)
-        print(f"Image 0: {img0_path}, Class of Image 0: {class0}\nImage 1: {img1_path}, Class of Image 1: {class1}")
+        print(f"Image 0: {img0_path}, Class of Image 0: {class0[0]}\nImage 1: {img1_path}, Class of Image 1: {class1[0]}")
         print(f"Predicted Euclideam Distance: {euclidean_distance.item()}")
 
         if euclidean_distance.item() > siamConfig.dissimilar_prediction_threshold and siamConfig.include_threshold == False:

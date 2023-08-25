@@ -29,7 +29,7 @@ Part of the code is partly based on code from this article: https://builtin.com/
 
 ####### Using the Main Drivers #######
 
-####### siamCompareImagePairs.py #######
+####### siamCompare.py #######
 
 Takes an existing directory and a CSV file, in that order. Both are prompted by their respective dialogs.
 
@@ -42,7 +42,7 @@ relativeImagePath2
 ...
 relativeImagePathN
 
-After accepting both inputs, siamCompareImagePairs.py will iterate over each distinct pair, outputing the image paths, the (predicted) pairwise distance b/w the images, and the label for each.
+After accepting both inputs, siamCompare.py will iterate over each distinct pair, outputing the image paths, the (predicted) pairwise distance b/w the images, and the label for each.
 
 ####### siamClassify.py #######
 

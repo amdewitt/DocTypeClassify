@@ -1,6 +1,9 @@
+
+# Imports
+
 from tkinter import filedialog
 #from PIL import Image
-import pandas
+#import pandas
 
 from siamDataset import PairwiseDataset
 from siamModel import SiameseModel
@@ -30,9 +33,9 @@ def __main__():
 
     dataloader = DataLoader(
         dataset,
-        shuffle = siamConfig.test_shuffle,
-        num_workers = siamConfig.test_num_workers,
-        batch_size = siamConfig.test_batch_size
+        shuffle = siamConfig.classify_shuffle,
+        num_workers = siamConfig.classify_num_workers,
+        batch_size = siamConfig.classify_batch_size
     )
 
     print("--------------------")

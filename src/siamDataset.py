@@ -59,6 +59,8 @@ class SiameseDataset:
     
 ####################
 
+# Used for image comparison
+# Same as SiameseDataset, but without classes
 class PairwiseDataset:
     def __init__(self, csvFile = None, directory = None, transform = None):
         self.df = pandas.read_csv(csvFile) # Read CSV File (headers always included in file)
@@ -94,3 +96,29 @@ class PairwiseDataset:
 
     def __len__(self):
         return int((len(self.df) * (len(self.df) - 1)) / 2)
+    
+####################
+
+# Used for comparing an input image to images with known classes
+class PointwiseDataset:
+    def __init__(self, inputPath = None, csvFile = None, directory = None, transform = None):
+        self.inputImgPath = inputPath
+        if siamConfig.treat_first_line_as_header == False:
+            self.df = pandas.read_csv(csvFile, header=None) # Read CSV File (headers not included in file)
+        else:
+            self.df = pandas.read_csv(csvFile)
+        self.df.columns = ["ImagePath", "imageClass"] # Initialize Columns
+        self.dir = directory
+        self.transform = transform
+
+    def __getitem__(self, index):
+        
+        inputImg = siamUtils.imagePathToImage(self.inputImgPath)
+        img = siamUtils.imagePathToImage(os.path.join(self.dir, self.df.iat[index, 0]))
+
+        imgClass = str(self.df.iat[index, 1]).lower()
+
+        return inputImg, img, imgClass
+    
+    def __len__(self):
+        return len(self.df)

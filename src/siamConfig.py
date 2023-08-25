@@ -15,8 +15,8 @@ test_dir = "sets\\mnemPieceImages\\" # Root Directory
 test_csv = "csvFiles\\demoTest.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 # Classification
-classify_dir = "sets\\mnemPieceImages\\" # Root Directory
-classify_csv = "csvFiles\\demoClassify.csv" # CSV File Pointing to Images (Format: Image,Class)
+classify_dir = test_dir # classify_dir = "sets\\mnemPieceImages\\" # Root Directory
+classify_csv = test_csv # classify_csv = "csvFiles\\demoClassify.csv" # CSV File Pointing to Images (Format: Image,Class)
 
 ### Model Configuration Parameters ###
 
@@ -45,13 +45,19 @@ eval_batch_size = train_batch_size
 
 # Testing Parameters
 max_tests = 0 # Any value < 1 causes a full test run
-dissimilar_prediction_threshold = 0.5
+dissimilar_prediction_threshold = 2.0
 include_threshold = False
 
 # Testing Dataloader Parameters
 test_shuffle = False
-test_num_workers = 0
+test_num_workers = 6
 test_batch_size = 1
+
+# Classification Dataloader Parameters
+
+classify_shuffle = False
+classify_num_workers = 6
+classify_batch_size = 1
 
 # Model State Dictionary Path
 model_path = "..\\savedModels\\demoModel.pth"
