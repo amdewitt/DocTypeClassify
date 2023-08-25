@@ -58,7 +58,7 @@ def train():
         optimizer.step()
         loss.append(contrastive_loss.item())
     loss = np.array(loss)
-    return loss.mean()/len(train_dataloader)
+    return loss.mean()/max(len(train_dataloader), 1)
 
 def eval():
     loss = []
@@ -69,7 +69,7 @@ def eval():
         contrastive_loss = lossFunction(output1, output2, label)
         loss.append(contrastive_loss.item())
     loss = np.array(loss)
-    return loss.mean()/len(train_dataloader)
+    return loss.mean()/max(len(train_dataloader), 1)
 
 def __main__():
     for epoch in range(0, siamConfig.epochs):
